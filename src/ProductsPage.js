@@ -9,6 +9,7 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
   const [currentImageIndex, setCurrentImageIndex] = useState({})
   const [fullscreenImage, setFullscreenImage] = useState(null)
   const [fullscreenProductId, setFullscreenProductId] = useState(null)
+  const { collection } = useParams();
 
   useEffect(() => {
     if (isDarkMode) {
@@ -46,13 +47,12 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
         description: 'Kit Xícaras Personalizadas, Café e Coador Casal',
         price: 'R$ 125,00', 
         images: [
-          '/kitpresente/1.svg?height=400&width=400',
-          '/kitpresente/2.svg?height=400&width=400',
-          '/kitpresente/3.svg?height=400&width=400',
-          '/kitpresente/4.svg?height=400&width=400'        
+          '/kitpresente/1.png?height=400&width=400',
+          '/kitpresente/2.png?height=400&width=400',
+          '/kitpresente/3.png?height=400&width=400',
+          '/kitpresente/4.png?height=400&width=400'        
         ]
       },
-
     ],
     canecas: [
       { 
@@ -71,44 +71,20 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
     adesivos: [
       { 
         id: 1, 
-        name: 'Kit Presente Deluxe', 
-        description: 'Kit presente com caderno personalizado, caneta e marcadores.',
-        price: 'R$ 59,99', 
+        name: 'Kit Adesivos', 
+        description: 'Kit com diversos adesivos personalizados',
+        price: 'R$ 15,99', 
         images: [
-          '/agendas/1.png?height=400&width=400',
-          '/agendas/2.png?height=400&width=400',
-          '/agendas/3.png?height=400&width=400',
-          '/agendas/4.png?height=400&width=400'
-        ]
-      },
-      { 
-        id: 2, 
-        name: 'Conjunto Escritório', 
-        description: 'Conjunto para escritório com organizador, bloco de notas e canetas.',
-        price: 'R$ 79,99', 
-        images: [
-          '/agendas/4.png?height=400&width=400',
-          '/agendas/5.png?height=400&width=400',
-          '/agendas/6.png?height=400&width=400',
-          '/agendas/7.png?height=400&width=400'
-        ]
-      },
-      { 
-        id: 3, 
-        name: 'Kit Artista', 
-        description: 'Kit completo para artistas com sketchbook, lápis e estojo.',
-        price: 'R$ 99,99', 
-        images: [
-          '/agendas/3.png?height=400&width=400',
-          '/agendas/8.png?height=400&width=400',
-          '/agendas/9.png?height=400&width=400',
-          '/agendas/10.png?height=400&width=400'
+          '/adesivos/1.png?height=400&width=400',
+          '/adesivos/2.png?height=400&width=400',
+          '/adesivos/3.png?height=400&width=400',
+          '/adesivos/4.png?height=400&width=400'
         ]
       },
     ],
   };
 
-  const products = productsData['cadernos'] || []
+  const products = productsData[collection] || []
 
   const nextImage = (productId) => {
     if (fullscreenImage) {
@@ -167,9 +143,10 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
                   <ArrowLeft size={20} className="mr-2" />
                   <span>Voltar</span>
                 </Link>
-                <Link to="/cadernos" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</Link>
-                <Link to="/presentes" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</Link>
-                <Link to="/sobre" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Sobre</Link>
+                <Link to="/products/cadernos" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</Link>
+                <Link to="/products/presente" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</Link>
+                <Link to="/products/canecas" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Canecas</Link>
+                <Link to="/products/adesivos" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Adesivos</Link>
               </div>
               <div className="flex items-center space-x-4">
                 <button
@@ -187,7 +164,7 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
         {/* Main Content */}
         <div className="pt-20 container mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-white capitalize">
-            Cadernos
+            {collection}
           </h1>
 
           <div className="space-y-8">
@@ -242,10 +219,10 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
               <div className="w-full md:w-1/4 mb-6 md:mb-0">
                 <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
                 <ul className="text-sm">
-                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</button></li>
-                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</button></li>
-                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Sobre Nós</button></li>
-                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Contato</button></li>
+                  <li><Link to="/products/cadernos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</Link></li>
+                  <li><Link to="/products/presente" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</Link></li>
+                  <li><Link to="/products/canecas" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</Link></li>
+                  <li><Link to="/products/adesivos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</Link></li>
                 </ul>
               </div>
               <div className="w-full md:w-1/4 mb-6 md:mb-0">

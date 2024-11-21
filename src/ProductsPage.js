@@ -1,37 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, Instagram, Facebook, Twitter } from 'lucide-react';
+'use client'
 
-function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentToggleDarkMode }) {
-  const { collection } = useParams();
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    return savedMode ? JSON.parse(savedMode) : initialIsDarkMode;
-  });
+import React, { useState, useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, Instagram, Facebook, Twitter, X } from 'lucide-react'
+
+export default function Component({ initialIsDarkMode = false, parentToggleDarkMode = () => {} }) {
+  const [isDarkMode, setIsDarkMode] = useState(initialIsDarkMode)
+  const [currentImageIndex, setCurrentImageIndex] = useState({})
+  const [fullscreenImage, setFullscreenImage] = useState(null)
+  const [fullscreenProductId, setFullscreenProductId] = useState(null)
 
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add("dark")
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("dark")
     }
-    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
+    localStorage.setItem('darkMode', JSON.stringify(isDarkMode))
+  }, [isDarkMode])
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode);
-    if (parentToggleDarkMode) {
-      parentToggleDarkMode();
-    }
-  };
+    setIsDarkMode(prevMode => !prevMode)
+    parentToggleDarkMode()
+  }
 
   const productsData = {
     cadernos: [
       { 
         id: 1, 
-        name: 'Caderno Espiral', 
-        description: 'Caderno espiral com 100 folhas pautadas, capa dura e design moderno.',
-        price: 'R$ 19,99', 
+        name: 'Agenda Personalizada', 
+        description: 'Agenda podem ser personalizadas como desejar',
+        price: 'R$ 69,99', 
         images: [
           '/agendas/1.png?height=400&width=400',
           '/agendas/2.png?height=400&width=400',
@@ -39,32 +38,37 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
           '/agendas/4.png?height=400&width=400'
         ]
       },
+    ],
+    presente: [
       { 
-        id: 2, 
-        name: 'Caderno Capa Dura', 
-        description: 'Caderno com capa dura resistente, 200 folhas sem pauta, ideal para desenhos e anotações.',
-        price: 'R$ 29,99', 
+        id: 1, 
+        name: 'Kit Presente Deluxe', 
+        description: 'Kit Xícaras Personalizadas, Café e Coador Casal',
+        price: 'R$ 125,00', 
         images: [
-          '/agendas/4.png?height=400&width=400',
-          '/agendas/5.png?height=400&width=400',
-          '/agendas/6.png?height=400&width=400',
-          '/agendas/7.png?height=400&width=400'
+          '/kitpresente/1.svg?height=400&width=400',
+          '/kitpresente/2.svg?height=400&width=400',
+          '/kitpresente/3.svg?height=400&width=400',
+          '/kitpresente/4.svg?height=400&width=400'        
         ]
       },
+
+    ],
+    canecas: [
       { 
-        id: 3, 
-        name: 'Sketchbook', 
-        description: 'Sketchbook com papel especial para desenho, 80 folhas e capa personalizada.',
-        price: 'R$ 39,99', 
+        id: 1, 
+        name: 'Canecas Personalizadas', 
+        description: 'Canecas podem ser personalizadas como desejar',
+        price: 'R$ 25,00', 
         images: [
-          '/agendas/3.png?height=400&width=400',
-          '/agendas/8.png?height=400&width=400',
-          '/agendas/9.png?height=400&width=400',
-          '/agendas/10.png?height=400&width=400'
+          '/canecas/caneca-01.png?height=400&width=400',
+          '/canecas/caneca-02.png?height=400&width=400',
+          '/canecas/caneca-03.png?height=400&width=400',
+          '/canecas/caneca-04.png?height=400&width=400'
         ]
       },
     ],
-    presente: [
+    adesivos: [
       { 
         id: 1, 
         name: 'Kit Presente Deluxe', 
@@ -104,28 +108,52 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
     ],
   };
 
-  const products = productsData[collection] || [];
-
-  const [currentImageIndex, setCurrentImageIndex] = useState({});
+  const products = productsData['cadernos'] || []
 
   const nextImage = (productId) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [productId]: (prev[productId] + 1) % 4 || 1
-    }));
-  };
+    if (fullscreenImage) {
+      setFullscreenImage(prev => {
+        const currentIndex = products.find(p => p.id === fullscreenProductId).images.indexOf(prev)
+        const nextIndex = (currentIndex + 1) % products.find(p => p.id === fullscreenProductId).images.length
+        return products.find(p => p.id === fullscreenProductId).images[nextIndex]
+      })
+    } else {
+      setCurrentImageIndex(prev => ({
+        ...prev,
+        [productId]: (prev[productId] + 1) % products.find(p => p.id === productId).images.length
+      }))
+    }
+  }
 
   const prevImage = (productId) => {
-    setCurrentImageIndex(prev => ({
-      ...prev,
-      [productId]: (prev[productId] - 1 + 4) % 4 || 3
-    }));
-  };
+    if (fullscreenImage) {
+      setFullscreenImage(prev => {
+        const currentIndex = products.find(p => p.id === fullscreenProductId).images.indexOf(prev)
+        const prevIndex = (currentIndex - 1 + products.find(p => p.id === fullscreenProductId).images.length) % products.find(p => p.id === fullscreenProductId).images.length
+        return products.find(p => p.id === fullscreenProductId).images[prevIndex]
+      })
+    } else {
+      setCurrentImageIndex(prev => ({
+        ...prev,
+        [productId]: (prev[productId] - 1 + products.find(p => p.id === productId).images.length) % products.find(p => p.id === productId).images.length
+      }))
+    }
+  }
+
+  const handleImageClick = (productId, imageUrl) => {
+    setFullscreenImage(imageUrl)
+    setFullscreenProductId(productId)
+  }
+
+  const closeFullscreen = () => {
+    setFullscreenImage(null)
+    setFullscreenProductId(null)
+  }
 
   const handleWhatsApp = (product) => {
-    const message = encodeURIComponent(`Olá! Gostaria de saber mais sobre o produto ${product.name} - ${product.price}`);
-    window.open(`https://wa.me/5511999999999?text=${message}`, '_blank');
-  };
+    const message = encodeURIComponent(`Olá! Gostaria de saber mais sobre o produto ${product.name} - ${product.price}`)
+    window.open(`https://wa.me/5511999999999?text=${message}`, '_blank')
+  }
 
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
@@ -159,7 +187,7 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
         {/* Main Content */}
         <div className="pt-20 container mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-white capitalize">
-            {collection.replace('-', ' ')}
+            Cadernos
           </h1>
 
           <div className="space-y-8">
@@ -169,21 +197,22 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
                   <img 
                     src={product.images[currentImageIndex[product.id] || 0]} 
                     alt={product.name} 
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover cursor-pointer"
+                    onClick={() => handleImageClick(product.id, product.images[currentImageIndex[product.id] || 0])}
                   />
-                  <button 
+                  <button
                     onClick={() => prevImage(product.id)} 
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Imagem anterior"
                   >
-                    <ChevronLeft size={24} className="text-gray-800 dark:text-gray-200" />
+                    <ChevronLeft className="h-4 w-4" />
                   </button>
-                  <button 
+                  <button
                     onClick={() => nextImage(product.id)} 
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Próxima imagem"
                   >
-                    <ChevronRight size={24} className="text-gray-800 dark:text-gray-200" />
+                    <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
                 <div className="p-6 flex-grow">
@@ -202,8 +231,8 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
           </div>
         </div>
 
-        {/* Enhanced Footer */}
-        <footer className="bg-gray-200 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-8 mt-16">
+        {/* Footer */}
+        <footer className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-8 mt-16">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-between">
               <div className="w-full md:w-1/4 mb-6 md:mb-0">
@@ -213,10 +242,10 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
               <div className="w-full md:w-1/4 mb-6 md:mb-0">
                 <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
                 <ul className="text-sm">
-                  <li><Link to="/cadernos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</Link></li>
-                  <li><Link to="/presentes" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</Link></li>
-                  <li><Link to="/sobre" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Sobre Nós</Link></li>
-                  <li><Link to="/contato" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Contato</Link></li>
+                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</button></li>
+                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</button></li>
+                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Sobre Nós</button></li>
+                  <li><button className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Contato</button></li>
                 </ul>
               </div>
               <div className="w-full md:w-1/4 mb-6 md:mb-0">
@@ -228,15 +257,15 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
                 <h3 className="text-lg font-semibold mb-2">Siga-nos</h3>
                 <div className="flex space-x-4">
                   <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Instagram size={24} />
+                    <Instagram className="h-5 w-5" />
                     <span className="sr-only">Instagram</span>
                   </a>
                   <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Facebook size={24} />
+                    <Facebook className="h-5 w-5" />
                     <span className="sr-only">Facebook</span>
                   </a>
                   <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Twitter size={24} />
+                    <Twitter className="h-5 w-5" />
                     <span className="sr-only">Twitter</span>
                   </a>
                 </div>
@@ -248,8 +277,38 @@ function ProductsPage({ isDarkMode: initialIsDarkMode, toggleDarkMode: parentTog
           </div>
         </footer>
       </div>
-    </div>
-  );
-}
 
-export default ProductsPage;
+      {/* Fullscreen Image Modal */}
+      {fullscreenImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+          <img 
+            src={fullscreenImage} 
+            alt="Fullscreen view" 
+            className="max-w-full max-h-full object-contain"
+          />
+          <button
+            onClick={() => prevImage(fullscreenProductId)}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+            aria-label="Imagem anterior"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            onClick={() => nextImage(fullscreenProductId)}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+            aria-label="Próxima imagem"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+          <button
+            onClick={closeFullscreen}
+            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+            aria-label="Fechar visualização em tela cheia"
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}

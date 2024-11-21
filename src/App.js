@@ -23,9 +23,9 @@ function App() {
   };
 
   const collections = [
-    { title: "Cadernos", image: "/1.png?height=300&width=300", slug: "cadernos" },
-    { title: "Kit Presente", image: "/3.png?height=300&width=300", slug: "presente" },
-    { title: "Canecas", image: "/4.png?height=300&width=300", slug: "canecas" },
+    { title: "Agendas & Cadernos", image: "/agendas/1.png?height=300&width=300", slug: "cadernos" },
+    { title: "Kit Presente", image: "/kitpresente/kit-presente.webp?height=300&width=300", slug: "presente" },
+    { title: "Canecas", image: "/canecas/Imagem frontal.png?height=300&width=300", slug: "canecas" },
     { title: "Adesivos", image: "/5.png?height=300&width=300", slug: "adesivos" },
   ];
 
@@ -54,7 +54,7 @@ function App() {
                 <header className="text-center py-8">
                   <div className="mb-4">
                     <img
-                      src="/logo.png?height=50&width=60"
+                      src="/marca.png?height=80&width=90"
                       alt="Logo"
                       className="mx-auto h-15 dark:invert"
                     />

@@ -1,37 +1,20 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, Instagram, Facebook, Twitter, X } from 'lucide-react'
 
-export default function Component({ initialIsDarkMode = false, parentToggleDarkMode = () => {} }) {
-  const [isDarkMode, setIsDarkMode] = useState(initialIsDarkMode)
+export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
   const [currentImageIndex, setCurrentImageIndex] = useState({})
   const [fullscreenImage, setFullscreenImage] = useState(null)
   const [fullscreenProductId, setFullscreenProductId] = useState(null)
   const { collection } = useParams()
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-    localStorage.setItem('darkMode', JSON.stringify(isDarkMode))
-  }, [isDarkMode])
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode)
-    parentToggleDarkMode()
-  }
-
   const productsData = {
     cadernos: [
-      { 
-        id: 1, 
-        name: 'Agenda Personalizada', 
-        description: 'Agenda podem ser personalizadas como desejar',
-        price: 'R$ 69,99', 
+      {
+        id: 1,
+        name: 'Agenda Personalizada',
+        description: 'Agendas podem ser personalizadas como desejar',
+        price: 'R$ 69,99',
         images: [
           '/agendas/1.png?height=400&width=400',
           '/agendas/2.png?height=400&width=400',
@@ -41,25 +24,25 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
       },
     ],
     presente: [
-      { 
-        id: 1, 
-        name: 'Kit Presente Deluxe', 
+      {
+        id: 1,
+        name: 'Kit Presente Deluxe',
         description: 'Kit Xícaras Personalizadas, Café e Coador Casal',
-        price: 'R$ 125,00', 
+        price: 'R$ 125,00',
         images: [
           '/kitpresente/1.png?height=400&width=400',
           '/kitpresente/2.png?height=400&width=400',
           '/kitpresente/3.png?height=400&width=400',
-          '/kitpresente/4.png?height=400&width=400'        
+          '/kitpresente/4.png?height=400&width=400'
         ]
       },
     ],
     canecas: [
-      { 
-        id: 1, 
-        name: 'Canecas Personalizadas', 
+      {
+        id: 1,
+        name: 'Canecas Personalizadas',
         description: 'Canecas podem ser personalizadas como desejar',
-        price: 'R$ 25,00', 
+        price: 'R$ 25,00',
         images: [
           '/canecas/caneca-01.png?height=400&width=400',
           '/canecas/caneca-02.png?height=400&width=400',
@@ -69,16 +52,16 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
       },
     ],
     adesivos: [
-      { 
-        id: 1, 
-        name: 'Kit Adesivos', 
+      {
+        id: 1,
+        name: 'Kit Adesivos',
         description: 'Kit com diversos adesivos personalizados',
-        price: 'R$ 15,99', 
+        price: 'R$ 21,99',
         images: [
-          '/adesivos/1.png?height=400&width=400',
-          '/adesivos/2.png?height=400&width=400',
-          '/adesivos/3.png?height=400&width=400',
-          '/adesivos/4.png?height=400&width=400'
+          '/adesivos/adesivo.webp?height=400&width=400',
+          '/adesivos/kit 01.png?height=400&width=400',
+          '/adesivos/kit 01.png?height=400&width=400',
+          '/adesivos/kit 01.png?height=400&width=400'
         ]
       },
     ],
@@ -130,12 +113,12 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
 
   const handleWhatsApp = (product) => {
     const message = encodeURIComponent(`Olá! Gostaria de saber mais sobre o produto ${product.name} - ${product.price}`)
-    window.open(`https://wa.me/5511999999999?text=${message}`, '_blank')
+    window.open(`https://wa.me/5518996798352?text=${message}`, '_blank')
   }
 
   return (
-    <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
-      <div className="bg-gray-100 dark:bg-[#000000] transition-colors duration-300 min-h-screen">
+    <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''}`}>
+      <div className="bg-gray-100 dark:bg-[#000000] transition-colors duration-300 flex-grow">
         <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
@@ -171,9 +154,9 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
             {products.map((product) => (
               <div key={product.id} className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <div className="relative w-full md:w-1/3 h-64">
-                  <img 
-                    src={product.images[currentImageIndex[product.id] || 0]} 
-                    alt={product.name} 
+                  <img
+                    src={product.images[currentImageIndex[product.id] || 0]}
+                    alt={product.name}
                     className="w-full h-full object-cover cursor-pointer"
                     onClick={() => handleImageClick(product.id, product.images[currentImageIndex[product.id] || 0])}
                   />
@@ -181,7 +164,7 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
                     onClick={(e) => {
                       e.stopPropagation()
                       prevImage(product.id)
-                    }} 
+                    }}
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Imagem anterior"
                   >
@@ -191,7 +174,7 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
                     onClick={(e) => {
                       e.stopPropagation()
                       nextImage(product.id)
-                    }} 
+                    }}
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Próxima imagem"
                   >
@@ -202,75 +185,106 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
                   <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">{product.name}</h2>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">{product.description}</p>
                   <p className="text-xl font-bold text-gray-900 dark:text-white mb-4">{product.price}</p>
-                  <button 
+                  <button
                     onClick={() => handleWhatsApp(product)}
                     className="w-full md:w-auto px-6 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-300"
                   >
                     Comprar pelo WhatsApp
                   </button>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    As imagens são meramente ilustrativas.
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        <footer className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-8 mt-16">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-between">
-              <div className="w-full md:w-1/4 mb-6 md:mb-0">
-                <h3 className="text-lg font-semibold mb-2">Sobre Nós</h3>
-                <p className="text-sm">Mugs & More é sua loja online para cadernos, agendas e presentes personalizados.</p>
-              </div>
-              <div className="w-full md:w-1/4 mb-6 md:mb-0">
-                <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
-                <ul className="text-sm">
-                  <li><Link to="/products/cadernos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</Link></li>
-                  <li><Link to="/products/presente" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</Link></li>
-                  <li><Link to="/products/canecas" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</Link></li>
-                  <li><Link to="/products/adesivos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</Link></li>
-                </ul>
-              </div>
-              <div className="w-full md:w-1/4 mb-6 md:mb-0">
-                <h3 className="text-lg font-semibold mb-2">Contato</h3>
-                <p className="text-sm">Email: contato@mugsandmore.com</p>
-                <p className="text-sm">Telefone: (11) 1234-5678</p>
-              </div>
-              <div className="w-full md:w-1/4">
-                <h3 className="text-lg font-semibold mb-2">Siga-nos</h3>
-                <div className="flex space-x-4">
-                  <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Instagram className="h-5 w-5" />
-                    <span className="sr-only">Instagram</span>
-                  </a>
-                  <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Facebook className="h-5 w-5" />
-                    <span className="sr-only">Facebook</span>
-                  </a>
-                  <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
-                    <Twitter className="h-5 w-5" />
-                    <span className="sr-only">Twitter</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-sm text-center">
-              <p>&copy; 2024 Mugs & More. Todos os direitos reservados.</p>
-            </div>
-          </div>
-        </footer>
       </div>
 
+      <footer className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-wrap justify-between">
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h3 className="text-lg font-semibold mb-2">Sobre Nós</h3>
+              <p className="text-sm">Mugs & More é sua loja online para cadernos, agendas e presentes personalizados.</p>
+            </div>
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
+              <ul className="text-sm">
+                <li><Link to="/products/cadernos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</Link></li>
+                <li><Link to="/products/presente" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</Link></li>
+                <li><Link to="/products/canecas" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</Link></li>
+                <li><Link to="/products/adesivos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</Link></li>
+              </ul>
+            </div>
+            <div className="w-full md:w-1/4 mb-6 md:mb-0">
+              <h3 className="text-lg font-semibold mb-2">Contato</h3>
+              <p className="text-sm">Email: </p>
+              <p className="text-sm">Telefone: (18) 99679-8352</p>
+            </div>
+            <div className="w-full md:w-1/4">
+              <h3 className="text-lg font-semibold mb-2">Siga-nos</h3>
+              <div className="flex space-x-4 items-center">
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/asa_personalizados/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                >
+                  <Instagram className="h-5 w-5" />
+                  <span className="sr-only">Instagram</span>
+                </a>
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/5518996798352?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20seus%20serviços."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                >
+                  <img
+                    src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000"
+                    alt="WhatsApp"
+                    className="h-5 w-5"
+                  />
+                  <span className="sr-only">WhatsApp</span>
+                </a>
+
+                {/* Shopee */}
+                <a
+                  href="https://shopee.com.br/seu_perfil"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                >
+                  <img
+                    src="https://img.icons8.com/?size=100&id=OO5wGWyvSK0L&format=png&color=000000"
+                    alt="Shopee"
+                    className="h-5 w-5"
+                  />
+                  <span className="sr-only">Shopee</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-sm text-center">
+            <p>&copy; 2024 Mugs & More. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
+
       {fullscreenImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
-          <img 
-            src={fullscreenImage} 
-            alt="Fullscreen view" 
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center
+z-50">
+          <img
+            src={fullscreenImage}
+            alt="Fullscreen view"
             className="max-w-full max-h-full object-contain"
           />
           <button
             onClick={() => prevImage(fullscreenProductId)}
-            className="absolute left-4
-top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
             aria-label="Imagem anterior"
           >
             <ChevronLeft className="h-6 w-6" />

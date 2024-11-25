@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import { Moon, Sun, Facebook, Youtube, Instagram } from 'lucide-react';
+import { Moon, Sun, Instagram, PhoneIcon as WhatsApp } from 'lucide-react';
 import ProductsPage from './ProductsPage';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
-    return savedMode ? JSON.parse(savedMode) : false;
+    if (savedMode !== null) {
+      return JSON.parse(savedMode);
+    }
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => {
+      setIsDarkMode(e.matches);
+    };
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -26,7 +39,7 @@ function App() {
     { title: "Agendas & Cadernos", image: "/agendas/1.png?height=300&width=300", slug: "cadernos" },
     { title: "Kit Presente", image: "/kitpresente/kit-presente.webp?height=300&width=300", slug: "presente" },
     { title: "Canecas", image: "/canecas/Imagem frontal.png?height=300&width=300", slug: "canecas" },
-    { title: "Adesivos", image: "/5.png?height=300&width=300", slug: "adesivos" },
+    { title: "Adesivos", image: "/adesivos/adesivo.webp?height=300&width=300", slug: "adesivos" },
   ];
 
   return (
@@ -37,14 +50,38 @@ function App() {
             <div className="dark:bg-black transition-colors duration-200 min-h-screen">
               {/* Social Media Sidebar */}
               <div className="fixed left-4 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-10">
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
-                  <Facebook size={20} />
+                <a
+                  href="https://wa.me/0188996798352?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20seus%20serviços."
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000"
+                    alt="Ícone WhatsApp"
+                    className="w-5 h-5"
+                  />
                 </a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
-                  <Youtube size={20} />
-                </a>
-                <a href="#" className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100">
+
+                <a
+                  href="https://www.instagram.com/asa_personalizados/"
+                  className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Instagram size={20} />
+                </a>
+                <a
+                  href="https://shopee.com.br/seu_perfil"
+                  className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 gap-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    src="https://img.icons8.com/?size=100&id=OO5wGWyvSK0L&format=png&color=000000"
+                    alt="Ícone Shopee"
+                    className="w-5 h-5"
+                  />
                 </a>
               </div>
 
@@ -62,9 +99,15 @@ function App() {
                   <nav className="flex justify-center gap-8 text-sm text-gray-600 dark:text-gray-300">
                     <a href="#" className="hover:text-gray-900 dark:hover:text-white">Início</a>
                     <a href="#" className="hover:text-gray-900 dark:hover:text-white">Loja</a>
-                    <a href="#" className="hover:text-gray-900 dark:hover:text-white">Sobre</a>
-                    <a href="#" className="hover:text-gray-900 dark:hover:text-white">Blog</a>
-                    <a href="#" className="hover:text-gray-900 dark:hover:text-white">Contato</a>
+                    <a href="https://www.instagram.com/asa_personalizados/" className="hover:text-gray-900 dark:hover:text-white">Sobre</a>
+                    <a
+                      href="https://wa.me/5518981111772?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20seus%20serviços."
+                      className="hover:text-gray-900 dark:hover:text-white"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Contato
+                    </a>
                   </nav>
                 </header>
 
@@ -91,7 +134,7 @@ function App() {
                         <img src={collection.image} alt={collection.title} className="w-full h-64 object-cover" />
                         <div className="p-4 text-center">
                           <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">{collection.title}</h2>
-                          <Link 
+                          <Link
                             to={`/products/${collection.slug}`}
                             className="inline-block px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                           >

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, Instagram, Facebook, Twitter, X } from 'lucide-react'
 
 export default function Component({ initialIsDarkMode = false, parentToggleDarkMode = () => {} }) {
@@ -9,7 +9,7 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
   const [currentImageIndex, setCurrentImageIndex] = useState({})
   const [fullscreenImage, setFullscreenImage] = useState(null)
   const [fullscreenProductId, setFullscreenProductId] = useState(null)
-  const { collection } = useParams();
+  const { collection } = useParams()
 
   useEffect(() => {
     if (isDarkMode) {
@@ -82,36 +82,38 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
         ]
       },
     ],
-  };
+  }
 
   const products = productsData[collection] || []
 
   const nextImage = (productId) => {
+    const product = products.find(p => p.id === productId)
     if (fullscreenImage) {
       setFullscreenImage(prev => {
-        const currentIndex = products.find(p => p.id === fullscreenProductId).images.indexOf(prev)
-        const nextIndex = (currentIndex + 1) % products.find(p => p.id === fullscreenProductId).images.length
-        return products.find(p => p.id === fullscreenProductId).images[nextIndex]
+        const currentIndex = product.images.indexOf(prev)
+        const nextIndex = (currentIndex + 1) % product.images.length
+        return product.images[nextIndex]
       })
     } else {
       setCurrentImageIndex(prev => ({
         ...prev,
-        [productId]: (prev[productId] + 1) % products.find(p => p.id === productId).images.length
+        [productId]: ((prev[productId] || 0) + 1) % product.images.length
       }))
     }
   }
 
   const prevImage = (productId) => {
+    const product = products.find(p => p.id === productId)
     if (fullscreenImage) {
       setFullscreenImage(prev => {
-        const currentIndex = products.find(p => p.id === fullscreenProductId).images.indexOf(prev)
-        const prevIndex = (currentIndex - 1 + products.find(p => p.id === fullscreenProductId).images.length) % products.find(p => p.id === fullscreenProductId).images.length
-        return products.find(p => p.id === fullscreenProductId).images[prevIndex]
+        const currentIndex = product.images.indexOf(prev)
+        const prevIndex = (currentIndex - 1 + product.images.length) % product.images.length
+        return product.images[prevIndex]
       })
     } else {
       setCurrentImageIndex(prev => ({
         ...prev,
-        [productId]: (prev[productId] - 1 + products.find(p => p.id === productId).images.length) % products.find(p => p.id === productId).images.length
+        [productId]: ((prev[productId] || 0) - 1 + product.images.length) % product.images.length
       }))
     }
   }
@@ -134,7 +136,6 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
   return (
     <div className={`min-h-screen ${isDarkMode ? 'dark' : ''}`}>
       <div className="bg-gray-100 dark:bg-[#000000] transition-colors duration-300 min-h-screen">
-        {/* Enhanced Navbar */}
         <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
@@ -161,7 +162,6 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
           </div>
         </nav>
 
-        {/* Main Content */}
         <div className="pt-20 container mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-white capitalize">
             {collection}
@@ -178,14 +178,20 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
                     onClick={() => handleImageClick(product.id, product.images[currentImageIndex[product.id] || 0])}
                   />
                   <button
-                    onClick={() => prevImage(product.id)} 
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      prevImage(product.id)
+                    }} 
                     className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Imagem anterior"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </button>
                   <button
-                    onClick={() => nextImage(product.id)} 
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      nextImage(product.id)
+                    }} 
                     className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
                     aria-label="Próxima imagem"
                   >
@@ -208,7 +214,6 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
           </div>
         </div>
 
-        {/* Footer */}
         <footer className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-8 mt-16">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-between">
@@ -255,7 +260,6 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
         </footer>
       </div>
 
-      {/* Fullscreen Image Modal */}
       {fullscreenImage && (
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
           <img 
@@ -265,7 +269,8 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
           />
           <button
             onClick={() => prevImage(fullscreenProductId)}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+            className="absolute left-4
+top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
             aria-label="Imagem anterior"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -289,3 +294,4 @@ export default function Component({ initialIsDarkMode = false, parentToggleDarkM
     </div>
   )
 }
+

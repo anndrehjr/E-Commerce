@@ -232,7 +232,11 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
                   rel="noopener noreferrer"
                   className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
                 >
-                  <Instagram className="h-5 w-5" />
+                  <img
+                    src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000"
+                    alt="WhatsApp"
+                    className="h-5 w-5"
+                  />
                   <span className="sr-only">Instagram</span>
                 </a>
 
@@ -244,7 +248,7 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
                   className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
                 >
                   <img
-                    src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000"
+                    src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000"
                     alt="WhatsApp"
                     className="h-5 w-5"
                   />
@@ -259,7 +263,7 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
                   className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
                 >
                   <img
-                    src="https://img.icons8.com/?size=100&id=OO5wGWyvSK0L&format=png&color=000000"
+                    src="https://img.icons8.com/?size=100&id=mBkyWceUPlkM&format=png&color=000000"
                     alt="Shopee"
                     className="h-5 w-5"
                   />

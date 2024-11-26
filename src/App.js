@@ -57,7 +57,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src="https://img.icons8.com/?size=100&id=16712&format=png&color=000000"
+                    src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000"
                     alt="Ícone WhatsApp"
                     className="w-5 h-5"
                   />
@@ -69,7 +69,11 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Instagram size={20} />
+                  <img
+                    src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000"
+                    alt="Ícone Instagram"
+                    className="w-5 h-5"
+                  />
                 </a>
                 <a
                   href="https://shopee.com.br/seu_perfil"
@@ -78,7 +82,7 @@ function App() {
                   rel="noopener noreferrer"
                 >
                   <img
-                    src="https://img.icons8.com/?size=100&id=OO5wGWyvSK0L&format=png&color=000000"
+                    src="https://img.icons8.com/?size=100&id=mBkyWceUPlkM&format=png&color=000000"
                     alt="Ícone Shopee"
                     className="w-5 h-5"
                   />

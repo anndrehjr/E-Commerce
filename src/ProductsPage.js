@@ -206,7 +206,7 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
           <div className="flex flex-wrap justify-between">
             <div className="w-full md:w-1/4 mb-6 md:mb-0">
               <h3 className="text-lg font-semibold mb-2">Sobre Nós</h3>
-              <p className="text-sm">Mugs & More é sua loja online para cadernos, agendas e presentes personalizados.</p>
+              <p className="text-sm">Asa Personalizados é sua loja online para cadernos, agendas e presentes personalizados.</p>
             </div>
             <div className="w-full md:w-1/4 mb-6 md:mb-0">
               <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
@@ -273,7 +273,7 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
             </div>
           </div>
           <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-sm text-center">
-            <p>&copy; 2024 Mugs & More. Todos os direitos reservados.</p>
+            <p>&copy; 2024 Asa_Personalizados. Todos os direitos reservados.</p>
           </div>
         </div>
       </footer>

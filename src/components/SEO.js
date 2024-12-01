@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/*"
-  to = "/public/index.html"
+  to = "/index.html"
   status = 200
 
 [build.environment]
@@ -14,3 +14,4 @@
   skip_processing = false
 
 [build.processing.html]
+  pretty_urls = true

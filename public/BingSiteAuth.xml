@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<users>
+	<user>F74D51E256BAAFAF6A8294D95C002D52</user>
+	  <url>
+    <loc>https://personalizadosaguiar.netlify.app</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://personalizadosaguiar.netlify.app/products/cadernos</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://personalizadosaguiar.netlify.app/products/presente</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://personalizadosaguiar.netlify.app/products/canecas</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://personalizadosaguiar.netlify.app/products/adesivos</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</users>

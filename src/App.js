@@ -5,6 +5,7 @@ import ProductsPage from './ProductsPage';
 import { PageTransition } from './components/PageTransition';
 import { NotFound } from './components/NotFound';
 import HomePage from './components/HomePage';
+import { Helmet } from 'react-helmet';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -40,6 +41,16 @@ function App() {
 
   return (
     <Router>
+      <Helmet>
+        <title>Personalizados Aguiar - Produtos Únicos e Especiais</title>
+        <meta name="description" content="Descubra produtos personalizados únicos na Personalizados Aguiar. Agendas, canecas, presentes e muito mais para tornar seu dia especial." />
+        <meta name="keywords" content="personalizados aguiar, produtos personalizados, agendas, canecas, presentes" />
+        <link rel="canonical" href="https://personalizadosaguiar.netlify.app" />
+        <meta property="og:title" content="Personalizados Aguiar - Produtos Únicos e Especiais" />
+        <meta property="og:description" content="Descubra produtos personalizados únicos na Personalizados Aguiar. Agendas, canecas, presentes e muito mais para tornar seu dia especial." />
+        <meta property="og:url" content="https://personalizadosaguiar.netlify.app" />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <PageTransition isDarkMode={isDarkMode}>
         <Routes>
           <Route path="/" element={<HomePage isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />

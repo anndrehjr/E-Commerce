@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, Instagram, Facebook, Twitter, X } from 'lucide-react'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, X } from 'lucide-react'
 
 export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
   const [currentImageIndex, setCurrentImageIndex] = useState({})
   const [fullscreenImage, setFullscreenImage] = useState(null)
   const [fullscreenProductId, setFullscreenProductId] = useState(null)
   const { collection } = useParams()
+  const navigate = useNavigate()
 
   const productsData = {
     cadernos: [
@@ -42,7 +43,7 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
         id: 1,
         name: 'Canecas Personalizadas',
         description: 'Canecas podem ser personalizadas como desejar',
-        price: 'R$ 25,00',
+        price: 'R$ 30,00',
         images: [
           '/canecas/caneca-01.png?height=400&width=400',
           '/canecas/caneca-02.png?height=400&width=400',
@@ -118,198 +119,198 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
 
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''}`}>
-      <div className="bg-gray-100 dark:bg-[#000000] transition-colors duration-300 flex-grow">
-        <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 text-gray-800 dark:text-white shadow-md z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-4">
-                <Link to="/" className="flex items-center hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
-                  <ArrowLeft size={20} className="mr-2" />
-                  <span>Voltar</span>
-                </Link>
-                <Link to="/products/cadernos" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</Link>
-                <Link to="/products/presente" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</Link>
-                <Link to="/products/canecas" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Canecas</Link>
-                <Link to="/products/adesivos" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Adesivos</Link>
-              </div>
-              <div className="flex items-center space-x-4">
-                <button
-                  onClick={toggleDarkMode}
-                  className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-200"
-                  aria-label="Alternar modo escuro"
-                >
-                  {isDarkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-600" size={20} />}
-                </button>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <div className="pt-20 container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-white capitalize">
-            {collection}
-          </h1>
-
-          <div className="space-y-8">
-            {products.map((product) => (
-              <div key={product.id} className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="relative w-full md:w-1/3 h-64">
-                  <img
-                    src={product.images[currentImageIndex[product.id] || 0]}
-                    alt={product.name}
-                    className="w-full h-full object-cover cursor-pointer"
-                    onClick={() => handleImageClick(product.id, product.images[currentImageIndex[product.id] || 0])}
-                  />
+        <div className="bg-white dark:bg-black transition-colors duration-300 flex-grow">
+          <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-black text-gray-800 dark:text-white shadow-md z-50">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-4">
+                  <Link to="/" className="flex items-center hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">
+                    <ArrowLeft size={20} className="mr-2" />
+                    <span>Voltar</span>
+                  </Link>
+                  <button onClick={() => { navigate('/products/cadernos'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</button>
+                  <button onClick={() => { navigate('/products/presente'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</button>
+                  <button onClick={() => { navigate('/products/canecas'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Canecas</button>
+                  <button onClick={() => { navigate('/products/adesivos'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Adesivos</button>
+                </div>
+                <div className="flex items-center space-x-4">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      prevImage(product.id)
-                    }}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
-                    aria-label="Imagem anterior"
+                    onClick={toggleDarkMode}
+                    className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 transition-colors duration-200"
+                    aria-label="Alternar modo escuro"
                   >
-                    <ChevronLeft className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      nextImage(product.id)
-                    }}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
-                    aria-label="Próxima imagem"
-                  >
-                    <ChevronRight className="h-4 w-4" />
+                    {isDarkMode ? <Sun className="text-yellow-400" size={20} /> : <Moon className="text-gray-600" size={20} />}
                   </button>
                 </div>
-                <div className="p-6 flex-grow">
-                  <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">{product.name}</h2>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{product.description}</p>
-                  <p className="text-xl font-bold text-gray-900 dark:text-white mb-4">{product.price}</p>
-                  <button
-                    onClick={() => handleWhatsApp(product)}
-                    className="w-full md:w-auto px-6 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-300"
+              </div>
+            </div>
+          </nav>
+
+          <div className="pt-20 container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-semibold mb-8 text-gray-900 dark:text-white capitalize">
+              {collection}
+            </h1>
+
+            <div className="space-y-8">
+              {products.map((product) => (
+                <div key={product.id} className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="relative w-full md:w-1/3 h-64">
+                    <img
+                      src={product.images[currentImageIndex[product.id] || 0]}
+                      alt={product.name}
+                      className="w-full h-full object-cover cursor-pointer"
+                      onClick={() => handleImageClick(product.id, product.images[currentImageIndex[product.id] || 0])}
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        prevImage(product.id)
+                      }}
+                      className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
+                      aria-label="Imagem anterior"
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        nextImage(product.id)
+                      }}
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-1 shadow-md transition-colors duration-200"
+                      aria-label="Próxima imagem"
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="p-6 flex-grow">
+                    <h2 className="text-2xl font-semibold mb-2 text-gray-900 dark:text-white">{product.name}</h2>
+                    <p className="text-gray-600 dark:text:gray-300 mb-4">{product.description}</p>
+                    <p className="text-xl font-bold text-gray-900 dark:text-white mb-4">{product.price}</p>
+                    <button
+                      onClick={() => handleWhatsApp(product)}
+                      className="w-full md:w-auto px-6 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-md shadow-md hover:shadow-lg transition-all duration-300"
+                    >
+                      Comprar pelo WhatsApp
+                    </button>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      As imagens são meramente ilustrativas.
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <footer className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-8">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-between">
+              <div className="w-full md:w-1/4 mb-6 md:mb-0">
+                <h3 className="text-lg font-semibold mb-2">Sobre Nós</h3>
+                <p className="text-sm">Asa Personalizados é sua loja online para cadernos, agendas e presentes personalizados.</p>
+              </div>
+              <div className="w-full md:w-1/4 mb-6 md:mb-0">
+                <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
+                <ul className="text-sm">
+                  <li><button onClick={() => { navigate('/products/cadernos'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</button></li>
+                  <li><button onClick={() => { navigate('/products/presente'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</button></li>
+                  <li><button onClick={() => { navigate('/products/canecas'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</button></li>
+                  <li><button onClick={() => { navigate('/products/adesivos'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</button></li>
+                </ul>
+              </div>
+              <div className="w-full md:w-1/4 mb-6 md:mb-0">
+                <h3 className="text-lg font-semibold mb-2">Contato</h3>
+                <p className="text-sm">Email: </p>
+                <p className="text-sm">Telefone: (18) 99679-8352</p>
+              </div>
+              <div className="w-full md:w-1/4">
+                <h3 className="text-lg font-semibold mb-2">Siga-nos</h3>
+                <div className="flex space-x-4 items-center">
+                  {/* Instagram */}
+                  <a
+                    href="https://www.instagram.com/asa_personalizados/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
                   >
-                    Comprar pelo WhatsApp
-                  </button>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    As imagens são meramente ilustrativas.
-                  </p>
+                    <img
+                      src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000"
+                      alt="WhatsApp"
+                      className="h-5 w-5"
+                    />
+                    <span className="sr-only">Instagram</span>
+                  </a>
+
+                  {/* WhatsApp */}
+                  <a
+                    href="https://wa.me/5518996798352?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20seus%20serviços."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                  >
+                    <img
+                      src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000"
+                      alt="WhatsApp"
+                      className="h-5 w-5"
+                    />
+                    <span className="sr-only">WhatsApp</span>
+                  </a>
+
+                  {/* Shopee */}
+                  <a
+                    href="https://shopee.com.br/seu_perfil"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
+                  >
+                    <img
+                      src="https://img.icons8.com/?size=100&id=mBkyWceUPlkM&format=png&color=000000"
+                      alt="Shopee"
+                      className="h-5 w-5"
+                    />
+                    <span className="sr-only">Shopee</span>
+                  </a>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <footer className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-between">
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
-              <h3 className="text-lg font-semibold mb-2">Sobre Nós</h3>
-              <p className="text-sm">Asa Personalizados é sua loja online para cadernos, agendas e presentes personalizados.</p>
             </div>
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
-              <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
-              <ul className="text-sm">
-                <li><Link to="/products/cadernos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</Link></li>
-                <li><Link to="/products/presente" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</Link></li>
-                <li><Link to="/products/canecas" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</Link></li>
-                <li><Link to="/products/adesivos" className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</Link></li>
-              </ul>
-            </div>
-            <div className="w-full md:w-1/4 mb-6 md:mb-0">
-              <h3 className="text-lg font-semibold mb-2">Contato</h3>
-              <p className="text-sm">Email: </p>
-              <p className="text-sm">Telefone: (18) 99679-8352</p>
-            </div>
-            <div className="w-full md:w-1/4">
-              <h3 className="text-lg font-semibold mb-2">Siga-nos</h3>
-              <div className="flex space-x-4 items-center">
-                {/* Instagram */}
-                <a
-                  href="https://www.instagram.com/asa_personalizados/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-                >
-                  <img
-                    src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000"
-                    alt="WhatsApp"
-                    className="h-5 w-5"
-                  />
-                  <span className="sr-only">Instagram</span>
-                </a>
-
-                {/* WhatsApp */}
-                <a
-                  href="https://wa.me/5518996798352?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20seus%20serviços."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-                >
-                  <img
-                    src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000"
-                    alt="WhatsApp"
-                    className="h-5 w-5"
-                  />
-                  <span className="sr-only">WhatsApp</span>
-                </a>
-
-                {/* Shopee */}
-                <a
-                  href="https://shopee.com.br/seu_perfil"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
-                >
-                  <img
-                    src="https://img.icons8.com/?size=100&id=mBkyWceUPlkM&format=png&color=000000"
-                    alt="Shopee"
-                    className="h-5 w-5"
-                  />
-                  <span className="sr-only">Shopee</span>
-                </a>
-              </div>
+            <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-sm text-center">
+              <p>&copy; 2024 Asa_Personalizados. Todos os direitos reservados.</p>
             </div>
           </div>
-          <div className="border-t border-gray-300 dark:border-gray-700 mt-8 pt-8 text-sm text-center">
-            <p>&copy; 2024 Asa_Personalizados. Todos os direitos reservados.</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
 
-      {fullscreenImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center
+        {fullscreenImage && (
+          <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center
 z-50">
-          <img
-            src={fullscreenImage}
-            alt="Fullscreen view"
-            className="max-w-full max-h-full object-contain"
-          />
-          <button
-            onClick={() => prevImage(fullscreenProductId)}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
-            aria-label="Imagem anterior"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          <button
-            onClick={() => nextImage(fullscreenProductId)}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
-            aria-label="Próxima imagem"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-          <button
-            onClick={closeFullscreen}
-            className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
-            aria-label="Fechar visualização em tela cheia"
-          >
-            <X className="h-6 w-6" />
-          </button>
-        </div>
-      )}
-    </div>
+            <img
+              src={fullscreenImage}
+              alt="Fullscreen view"
+              className="max-w-full max-h-full object-contain"
+            />
+            <button
+              onClick={() => prevImage(fullscreenProductId)}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+              aria-label="Imagem anterior"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+            <button
+              onClick={() => nextImage(fullscreenProductId)}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+              aria-label="Próxima imagem"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </button>
+            <button
+              onClick={closeFullscreen}
+              className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-full p-2 shadow-md transition-colors duration-200"
+              aria-label="Fechar visualização em tela cheia"
+            >
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        )}
+      </div>
   )
 }
 

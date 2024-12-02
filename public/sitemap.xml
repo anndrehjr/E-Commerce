@@ -1,4 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página inicial -->
+  <url>
+    <loc>https://personalizadosaguiar.vercel.app</loc>
+    <lastmod>2024-01-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
 
+  <!-- Páginas de produtos -->
+  <url>
+    <loc>https://personalizadosaguiar.vercel.app/products/cadernos</loc>
+    <lastmod>2024-01-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://personalizadosaguiar.vercel.app/products/presente</loc>
+    <lastmod>2024-01-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://personalizadosaguiar.vercel.app/products/canecas</loc>
+    <lastmod>2024-01-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://personalizadosaguiar.vercel.app/products/adesivos</loc>
+    <lastmod>2024-01-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

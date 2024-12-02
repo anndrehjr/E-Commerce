@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Moon, Sun, ChevronLeft, ChevronRight, X } from 'lucide-react'
 
@@ -8,6 +8,10 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
   const [fullscreenProductId, setFullscreenProductId] = useState(null)
   const { collection } = useParams()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [collection]);
 
   const productsData = {
     cadernos: [
@@ -128,10 +132,10 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
                     <ArrowLeft size={20} className="mr-2" />
                     <span>Voltar</span>
                   </Link>
-                  <button onClick={() => { navigate('/products/cadernos'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</button>
-                  <button onClick={() => { navigate('/products/presente'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</button>
-                  <button onClick={() => { navigate('/products/canecas'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Canecas</button>
-                  <button onClick={() => { navigate('/products/adesivos'); window.scrollTo(0, 0); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Adesivos</button>
+                  <button onClick={() => { navigate('/products/cadernos'); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Cadernos</button>
+                  <button onClick={() => { navigate('/products/presente'); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Presentes</button>
+                  <button onClick={() => { navigate('/products/canecas'); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Canecas</button>
+                  <button onClick={() => { navigate('/products/adesivos'); }} className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">Adesivos</button>
                 </div>
                 <div className="flex items-center space-x-4">
                   <button
@@ -212,10 +216,10 @@ export default function ProductsPage({ isDarkMode, toggleDarkMode }) {
               <div className="w-full md:w-1/4 mb-6 md:mb-0">
                 <h3 className="text-lg font-semibold mb-2">Links Rápidos</h3>
                 <ul className="text-sm">
-                  <li><button onClick={() => { navigate('/products/cadernos'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</button></li>
-                  <li><button onClick={() => { navigate('/products/presente'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</button></li>
-                  <li><button onClick={() => { navigate('/products/canecas'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</button></li>
-                  <li><button onClick={() => { navigate('/products/adesivos'); window.scrollTo(0, 0); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</button></li>
+                  <li><button onClick={() => { navigate('/products/cadernos'); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Cadernos</button></li>
+                  <li><button onClick={() => { navigate('/products/presente'); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Presentes</button></li>
+                  <li><button onClick={() => { navigate('/products/canecas'); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Canecas</button></li>
+                  <li><button onClick={() => { navigate('/products/adesivos'); }} className="hover:text-gray-900 dark:hover:text-white transition-colors duration-200">Adesivos</button></li>
                 </ul>
               </div>
               <div className="w-full md:w-1/4 mb-6 md:mb-0">

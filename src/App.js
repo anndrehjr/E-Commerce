@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Moon, Sun } from 'lucide-react';
 import ProductsPage from './ProductsPage';
 import { PageTransition } from './components/PageTransition';
 import { NotFound } from './components/NotFound';

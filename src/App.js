@@ -7,6 +7,11 @@ import { PageTransition } from './components/PageTransition';
 import { NotFound } from './components/NotFound';
 import HomePage from './components/HomePage';
 import Checkout from './pages/Checkout';
+import Login from './pages/Login';
+import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
+
+
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -41,6 +46,8 @@ function App() {
   };
 
   return (
+    <AuthProvider>
+    <ThemeProvider>
     <CartProvider>
       <Router>
         <Helmet>
@@ -58,12 +65,15 @@ function App() {
             <Route path="/" element={<HomePage isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             <Route path="/products/:collection" element={<ProductsPage isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="*" element={<Navigate to="/404" replace />} />
           </Routes>
         </PageTransition>
       </Router>
     </CartProvider>
+    </ThemeProvider>
+    </AuthProvider>
   );
 }
 

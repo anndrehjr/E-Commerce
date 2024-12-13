@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { calculateShipping } from '../utils/shipping';
 
 export default function CartDrawer({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const { items, removeItem, updateQuantity, cartTotal } = useCart();
   const [cep, setCep] = useState('');
   const [shippingCost, setShippingCost] = useState(null);
@@ -101,7 +103,10 @@ export default function CartDrawer({ isOpen, onClose }) {
           </div>
 
           <button
-            onClick={() => {/* Implement checkout logic */}}
+            onClick={() => {
+              onClose();
+              navigate('/checkout');
+            }}
             className="w-full bg-black dark:bg-white text-white dark:text-black py-3 rounded-md font-medium hover:bg-gray-800 dark:hover:bg-gray-100"
           >
             Finalizar Compra
@@ -111,4 +116,3 @@ export default function CartDrawer({ isOpen, onClose }) {
     </div>
   );
 }
-
